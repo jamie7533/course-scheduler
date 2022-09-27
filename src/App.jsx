@@ -1,3 +1,5 @@
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'; 
 import Banner from "./components/Banner.jsx";
 import CourseList from "./components/CourseList.jsx";
 
@@ -33,7 +35,7 @@ const schedule = {
 
 const App = () => {
   return (
-    <div>
+    <div className='container'>
       <Banner title={schedule.title} />
       <CourseList courses={schedule.courses} />
     </div>
