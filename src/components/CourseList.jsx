@@ -1,10 +1,3 @@
-// "F101" : {
-//     "term": "Fall",
-//     "number": "101",
-//     "meets" : "MWF 11:00-11:50",
-//     "title" : "Computer Science: Concepts, Philosophy, and Connections"
-//   },
-
 const Course = ({ course }) => (
   <div className="card m-1 p-2">
     <div className="card-body">
