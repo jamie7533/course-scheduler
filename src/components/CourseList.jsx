@@ -13,14 +13,20 @@ const TermButton = ({ term, selection, setSelection }) => (
   <>
     <input type="radio" id={term} className="btn-check" checked={term === selection} autoComplete="off"
       onChange={() => setSelection(term)} />
-    <label class="btn btn-success m-1 p-2" htmlFor={term}>
+    <label className="btn btn-success m-1 p-2" htmlFor={term}>
       {term}
     </label>
   </>
 );
 
-const Course = ({ course }) => (
-  <div className="card m-1 p-2">
+const Course = ({ course, selected, toggleSelected }) => {
+  const isSelected = selected.includes(course);
+  const style = {
+    backgroundColor: isSelected ? 'lemonchiffon' : 'white',
+    color: isSelected ? 'green' : 'black'
+  };
+  return (
+  <div className="card m-1 p-2" onClick={() => {toggleSelected(course)}} style={style}>
     <div className="card-body">
       <h5 className="card-title">{course.term} CS {course.number}</h5>
       <div className="card-text">{course.title}</div>
@@ -29,16 +35,25 @@ const Course = ({ course }) => (
       {course.meets}
     </div>
   </div>
-);
+  );
+};
 
 const CourseList = ({ courses }) => {
   const [selection, setSelection] = useState(() => Object.values(terms)[0])
   const termCourses = Object.values(courses).filter(course => selection === course.term);
+  const [selected, setSelected] = useState([])
+
+  const toggleSelected = (course) => setSelected(
+    selected.includes(course)
+    ? selected.filter(x => x !== course)
+    : [...selected, course]
+  );
   return (
     <>
       <TermSelector selection={selection} setSelection={setSelection} />
       <div className="course-list">
-        {Object.entries(termCourses).map(([id, course]) => <Course key={id} course={course} />)}
+        {Object.entries(termCourses).map(([id, course]) =>
+          <Course key={id} course={course} selected={selected} toggleSelected={toggleSelected} />)}
       </div>
     </>
   );
