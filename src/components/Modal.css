@@ -20,4 +20,5 @@
   
   .modal-header {
     margin-left: auto;
+    border-bottom: none;
   }

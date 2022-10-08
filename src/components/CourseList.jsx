@@ -1,8 +1,10 @@
 import { useState } from "react";
-import Modal from './Modal';
+import Modal from "./Modal";
 import Cart from "./Cart";
+import Course from "./Course";
 
 const terms = { F: 'Fall', W: 'Winter', S: 'Spring' };
+
 const TermSelector = ({ selection, setSelection }) => (
   <div className="btn-group">
     {
@@ -11,6 +13,7 @@ const TermSelector = ({ selection, setSelection }) => (
     }
   </div>
 );
+
 const TermButton = ({ term, selection, setSelection }) => (
   <>
     <input type="radio" id={term} className="btn-check" checked={term === selection} autoComplete="off"
@@ -24,25 +27,6 @@ const TermButton = ({ term, selection, setSelection }) => (
 const ScheduleButton = ({ openModal }) => (
   <button className="ms-auto btn btn-dark" onClick={openModal}>Course Plan</button>
 );
-
-const Course = ({ course, selected, toggleSelected }) => {
-  const isSelected = selected.includes(course);
-  const style = {
-    backgroundColor: isSelected ? 'lemonchiffon' : 'white',
-    color: isSelected ? 'green' : 'black'
-  };
-  return (
-    <div className="card m-1 p-2" onClick={() => { toggleSelected(course) }} style={style}>
-      <div className="card-body">
-        <h5 className="card-title">{course.term} CS {course.number}</h5>
-        <div className="card-text">{course.title}</div>
-      </div>
-      <div className="card-footer">
-        {course.meets}
-      </div>
-    </div>
-  );
-};
 
 const CourseList = ({ courses }) => {
   const [selection, setSelection] = useState(() => Object.values(terms)[0])
