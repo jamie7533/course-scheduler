@@ -1,6 +1,8 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Banner from "./components/Banner.jsx";
 import CourseList from "./components/CourseList.jsx";
+import CourseEditor from './components/CourseEditor';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch.js';
 import { addScheduleTimes } from './utilities/time';
@@ -16,7 +18,12 @@ const Main = () => {
   return (
     <>
       <Banner title={schedule.title} />
-      <CourseList courses={schedule.courses} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<CourseList courses={schedule.courses} />} />
+          <Route path="/course_edit/:id" element={<CourseEditor />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

@@ -53,7 +53,7 @@ const CourseList = ({ courses }) => {
       </Modal>
       <div className="course-list">
         {Object.entries(termCourses).map(([id, course]) =>
-          <Course key={id} course={course} selected={selected} toggleSelected={toggleSelected} />)}
+          <Course key={id} id={id} course={course} selected={selected} toggleSelected={toggleSelected} />)}
       </div>
     </>
   );
