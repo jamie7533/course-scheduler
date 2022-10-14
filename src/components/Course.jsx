@@ -14,7 +14,7 @@ const Course = ({ id, course, selected, toggleSelected }) => {
     <div className="card m-1 p-2" onClick={isDisabled ? null : () => { toggleSelected(course) }} style={style}>
       <div>
       <Link to={`/course_edit/${id}`}>
-        <button> <i class="bi bi-pencil"></i></button>
+        <button> <i className="bi bi-pencil"></i></button>
       </Link>
       </div>
       <div className="card-body">
