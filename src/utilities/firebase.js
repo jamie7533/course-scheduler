@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { useState, useEffect } from 'react';
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { useState, useEffect, useCallback } from 'react';
+import { getDatabase, onValue, ref, update } from 'firebase/database';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCSk1eT68pXfMdQzCA0-XYXTTZEdcawMHs",
@@ -27,4 +27,21 @@ export const useDbData = (path) => {
   ), [ path ]);
 
   return [ data, error ];
+};
+
+const makeResult = (error) => {
+  const timestamp = Date.now();
+  const message = error?.message || `Updated: ${new Date(timestamp).toLocaleString()}`;
+  return { timestamp, error, message };
+};
+
+export const useDbUpdate = (path) => {
+  const [result, setResult] = useState();
+  const updateData = useCallback((value) => {
+    update(ref(database, path), value)
+    .then(() => setResult(makeResult()))
+    .catch((error) => setResult(makeResult(error)))
+  }, [database, path]);
+
+  return [updateData, result];
 };

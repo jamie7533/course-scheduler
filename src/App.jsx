@@ -8,8 +8,6 @@ import { addScheduleTimes } from './utilities/time';
 import { useDbData } from './utilities/firebase';
 
 const Main = () => {
-  // const [data, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
-  // let schedule = [];
   const [data, error] = useDbData('/', addScheduleTimes); 
   
   if (error) return <h1>Error loading course data: {`${error}`}</h1>;

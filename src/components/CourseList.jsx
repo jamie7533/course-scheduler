@@ -30,7 +30,7 @@ const ScheduleButton = ({ openModal }) => (
 
 const CourseList = ({ courses }) => {
   const [selection, setSelection] = useState(() => Object.values(terms)[0])
-  const termCourses = Object.values(courses).filter(course => selection === course.term);
+  const termCourses = Object.entries(courses).filter(course => selection === course[1].term);
   const [selected, setSelected] = useState([])
   const [open, setOpen] = useState(false);
 
@@ -52,8 +52,8 @@ const CourseList = ({ courses }) => {
         <Cart selected={selected} />
       </Modal>
       <div className="course-list">
-        {Object.entries(termCourses).map(([id, course]) =>
-          <Course key={id} id={id} course={course} selected={selected} toggleSelected={toggleSelected} />)}
+        {termCourses.map((course) =>
+          <Course key={course[0]} id={course[0]} course={course[1]} selected={selected} toggleSelected={toggleSelected} />)}
       </div>
     </>
   );

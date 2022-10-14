@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Course = ({ id, course, selected, toggleSelected }) => {
   const isSelected = selected.includes(course);
   const isDisabled = !isSelected && hasConflict(course, selected);
-
   const style = {
     backgroundColor: isDisabled ? 'lightgrey' : isSelected ? 'lemonchiffon' : 'white',
     color: isDisabled ? 'grey' : isSelected ? 'green' : 'black'
