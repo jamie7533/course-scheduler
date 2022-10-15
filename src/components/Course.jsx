@@ -1,7 +1,9 @@
 import { hasConflict } from "../utilities/time";
 import { Link } from 'react-router-dom';
+import { useAuthState } from "../utilities/firebase";
 
 const Course = ({ id, course, selected, toggleSelected }) => {
+  const user = useAuthState();
   const isSelected = selected.includes(course);
   const isDisabled = !isSelected && hasConflict(course, selected);
   const style = {
@@ -11,11 +13,11 @@ const Course = ({ id, course, selected, toggleSelected }) => {
 
   return (
     <div className="card m-1 p-2" onClick={isDisabled ? null : () => { toggleSelected(course) }} style={style}>
-      <div>
-      <Link to={`/course_edit/${id}`}>
+      {!user[0] ? <></> : <div>
+      <Link to={`/course_edit/${id}`} params={{id, course}}>
         <button> <i className="bi bi-pencil"></i></button>
       </Link>
-      </div>
+      </div>}
       <div className="card-body">
         <h5 className="card-title">{course.term} CS {course.number}</h5>
         <div className="card-text">{course.title}</div>

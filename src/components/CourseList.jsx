@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "./Modal";
 import Cart from "./Cart";
 import Course from "./Course";
+import { signInWithGoogle, signOut, useAuthState } from '../utilities/firebase';
 
 const terms = { F: 'Fall', W: 'Winter', S: 'Spring' };
 
@@ -24,8 +25,21 @@ const TermButton = ({ term, selection, setSelection }) => (
   </>
 );
 
+const SignInButton = () => (
+  <button className="ms-auto btn btn-light m-1 p-2" onClick={signInWithGoogle}>Sign in</button>
+);
+
+const SignOutButton = () => (
+  <button className="ms-auto btn btn-light m-1 p-2" onClick={signOut}>Sign out</button>
+);
+
+const AuthButton = () => {
+  const [user] = useAuthState();
+  return user ? <SignOutButton /> : <SignInButton />;
+};
+
 const ScheduleButton = ({ openModal }) => (
-  <button className="ms-auto btn btn-dark" onClick={openModal}>Course Plan</button>
+  <button className="ms-auto btn btn-dark m-1 p-2" onClick={openModal}>Course Plan</button>
 );
 
 const CourseList = ({ courses }) => {
@@ -47,7 +61,9 @@ const CourseList = ({ courses }) => {
       <nav className="d-flex">
         <TermSelector selection={selection} setSelection={setSelection} />
         <ScheduleButton openModal={openModal} />
+        <AuthButton />
       </nav>
+
       <Modal open={open} close={closeModal}>
         <Cart selected={selected} />
       </Modal>

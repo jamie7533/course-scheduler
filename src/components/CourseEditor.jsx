@@ -1,6 +1,6 @@
 import { useDbUpdate } from '../utilities/firebase';
 import { useFormData } from '../utilities/useFormData';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const validateUserData = (key, val) => {
     switch (key) {
@@ -26,13 +26,14 @@ const ButtonBar = ({ message, disabled }) => {
     return (
         <div className="d-flex">
             <button type="button" className="btn btn-outline-dark me-2" onClick={() => navigate(-1)}>Cancel</button>
-            <button type="submit" className="btn btn-primary me-auto" disabled={disabled}>Submit</button>
+            <button type="submit" className="btn btn-primary me-auto" disabled={disabled} onClick={() => navigate(-1)}>Submit</button>
             <span className="p-2">{message}</span>
         </div>
     );
 };
 
-const CourseEditor = ({ id, course }) => {
+const CourseEditor = ({course}) => {
+    const id = Object.values(useParams())
     const [update, result] = useDbUpdate(`/courses/${id}`);
     const [state, change] = useFormData(validateUserData, course);
     const submit = (evt) => {
