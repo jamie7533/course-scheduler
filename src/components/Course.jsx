@@ -18,7 +18,7 @@ const Course = ({ id, course, selected, toggleSelected }) => {
   if (!profile) return <h1>No profile data</h1>;
 
   return (
-    <div className="card m-1 p-2" onClick={isDisabled ? null : () => { toggleSelected(course) }} style={style}>
+    <div className="card m-1 p-2" data-cy="course" onClick={isDisabled ? null : () => { toggleSelected(course) }} style={style}>
       {profile?.isAdmin &&
         <div>
           <Link to={`/course_edit/${id}`} params={{ id, course }}>
