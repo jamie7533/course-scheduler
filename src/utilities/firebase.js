@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { useState, useEffect, useCallback } from 'react';
-import { getDatabase, onValue, ref, update } from 'firebase/database';
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { getDatabase, onValue, ref, update, connectDatabaseEmulator } from 'firebase/database';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, signInWithCredential, connectAuthEmulator } from 'firebase/auth';
 
 export const signInWithGoogle = () => {
   signInWithPopup(getAuth(firebase), new GoogleAuthProvider());
@@ -32,6 +32,19 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 const database = getDatabase(firebase);
+const auth = getAuth(firebase);
+
+console.log(window.location.hostname)
+if (window.location.hostname === '127.0.0.1') {
+  console.log('hello')
+  console.log(auth)
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+  signInWithCredential(auth, GoogleAuthProvider.credential(
+    '{"sub": "qq9Dmpwk66hCbwOBLF073lKmT63g", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
+  ));
+}
 
 export const useDbData = (path) => {
   const [data, setData] = useState();
